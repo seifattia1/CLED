@@ -27,16 +27,31 @@ namespace CLED.Areas.Identity
             }
             string email = "seifeddine.attia.1@esprit.tn";
             string password = "Seifattia1";
-
-            if(userManager.FindByEmailAsync(email).Result == null)
+            CLEDUser user = new CLEDUser();
+            user.UserName = email;
+            user.Email = email;
+            user.FirstName = "SeifEddine";
+            user.LastName = "Attia";
+            if (userManager.FindByEmailAsync(email).Result == null)
             {
-                CLEDUser user = new CLEDUser();
-                user.UserName = "SeifEddine";
-                user.Email = email;
+                
                 IdentityResult result = userManager.CreateAsync(user, password).Result;
+                
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
+ 
+            }
+            else if (userManager.FindByEmailAsync(email).Result != null)
+            {
+                try
+                {
+                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
                 }
             }
 

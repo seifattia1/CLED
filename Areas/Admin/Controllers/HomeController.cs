@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CLED.Areas.Admin.Controllers
 {
     [Area("admin")]
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class HomeController : Controller
     {
         public IActionResult Index()

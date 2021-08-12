@@ -27,7 +27,7 @@ namespace CLED.Areas.Identity
 
                 })
 
-                    .AddEntityFrameworkStores<CLEDContext>();
+                    .AddRoles<IdentityRole>().AddEntityFrameworkStores<CLEDContext>();
                 
             });
         }
