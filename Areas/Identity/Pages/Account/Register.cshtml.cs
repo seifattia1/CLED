@@ -48,6 +48,11 @@ namespace CLED.Areas.Identity.Pages.Account
         {
             [Required]
             [DataType(DataType.Text)]
+            [Display(Name = " UserName")]
+            public string UserName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
@@ -89,7 +94,7 @@ namespace CLED.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new CLEDUser { UserName = Input.LastName, Email = Input.Email,FirstName=Input.FirstName,LastName=Input.LastName,AccountType=Input.AccountType };
+                var user = new CLEDUser { UserName = Input.UserName, Email = Input.Email,FirstName=Input.FirstName,LastName=Input.LastName,AccountType=Input.AccountType };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

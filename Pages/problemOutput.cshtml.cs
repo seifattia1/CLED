@@ -21,11 +21,10 @@ namespace CLED.Pages
 
         [BindProperty]
         public string DrawingContent { get; set; }
-        public async Task<IActionResult> OnGet()
+        public IActionResult  OnGet()
         {
             var data = TempData["ListResults"] as string;
              List7 =  JsonSerializer.Deserialize<List<List<string>>>(data);
-           
             return Page();
         }
 

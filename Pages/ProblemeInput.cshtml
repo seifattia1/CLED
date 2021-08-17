@@ -8,62 +8,46 @@
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg">
-            <div class="well well-sm">
-                <form class="form-horizontal" action="" method="post">
-                    <fieldset>
-                        <legend class="text-center">Problem Input</legend>
 
-                        <div class="form-check form-horizontal">
-                            <div class="flex-xl-row">
-                                <div class="col-md-2">
-                                    <input class="form-check-input" type="radio" name="lang" value="en" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        <span>EN</span>
-                                    </label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input class="form-check-input" type="radio" name="lang" value="fr" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        <span>FR</span>
-                                    </label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input class="form-check-input" type="radio" name="lang" value="ar" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        <span>AR</span>
-                                    </label>
-                                </div>
-                            </div>
+        <form class="form" method="post">
+            <fieldset>
+                <legend class="text-center">Problem Input</legend>
+                <div class="form-group">
+                    <div class="flex-xl-row">
+                        <div class="col-md-10">
+                            <select asp-for="Input.Language" class="custom-select">
+                                <option disabled selected value="">Open this select menu</option>
+                                <option value="en">English</option>
+                                <option value="fr">French</option>
+                                <option value="ar">Arabe</option>
+                            </select>
+                            <span asp-validation-for="Input.Language"  class="alert-danger" ></span>
                         </div>
-
-                        <!-- Message body -->
-                        <div class="form-group">
-
-                            <div class="col-lg">
-                                <textarea asp-for="message" class="form-control" style="resize:none;" id="message" name="message" placeholder="Please enter your Problem here..." rows="15"></textarea>
-                            </div>
+                    </div>
+                </div>
+                <!-- Message body -->
+                <div class="form-group">
+                    <div class="flex-xl-row">
+                        <div class="col-md-10">
+                            <textarea asp-for="Input.Message" class="form-control" style="resize:none;" placeholder="Please enter your Problem here..." rows="15"></textarea>
+                            <span asp-validation-for="Input.Message" class="alert-danger" ></span>
                         </div>
+                        
+                    </div>
+                </div>
+                <!-- Form actions -->
 
-                        <!-- Form actions -->
-                        <div class="form-group">
-                            <div class="col-md-12 text-lg-center">
-                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+
 
 
 
 <div class="col-md">
-   
+
     <label>
         @{
 
@@ -74,33 +58,33 @@
                 foreach (var @a in Model.list3)
                 {
                     string[] ad = a.ToArray();
-                  
 
 
-                        foreach (var item in a)
+
+                    foreach (var item in a)
+                    {
+
+                        if (((item.Contains("http://")) || item.Contains("https://")))
                         {
-
-                            if (((item.Contains("http://")) || item.Contains("https://")))
+                            int i = Int32.Parse(ad[3]);
+                            urlpath = @item.ToString();
+                            if ((ad[1] != "PROPN"))
                             {
-                                int i = Int32.Parse(ad[3]);
-                                urlpath = @item.ToString();
-                                if ((ad[1] != "PROPN"))
-                                {
-                                  
-                                      <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
-                                      <span> @i</span>
-                                  
-                                }
+
+                                <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
+                                <span> @i</span>
 
                             }
+
                         }
-                        if ((ad[1] == "PROPN") )
-                        {
-                            urlpath = ad[0].ToString();
-                           
-                                <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
-                        }
-                    
+                    }
+                    if ((ad[1] == "PROPN"))
+                    {
+                        urlpath = ad[0].ToString();
+
+                        <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
+                    }
+
 
 
                 }
@@ -110,4 +94,7 @@
         }
     </label>
 </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

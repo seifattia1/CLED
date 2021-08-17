@@ -9,18 +9,38 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace CLED.Pages
 {
     [Authorize]
     public class ProblemeInputModel : PageModel
     {
+
+        [BindProperty]
+        public InputModel Input { get; set; }
         private HttpClient _client;
+
         public string message { get; set;}
         public string lang { get; set; }
         public resultJson result { get; set; }
         public List<List<string>> list1 = new List<List<string>>();
         public List<List<string>> list3 { get; set; }
+
+
+        public class InputModel
+        {
+            [Required]
+            [Display(Name = "Message")]
+            public string Message { get; set; }
+
+            [Required]
+            [Display(Name = "Language")]
+            public string Language { get; set; }
+
+           
+        }
+
         public ProblemeInputModel(HttpClient client)
         {
             _client = client;
@@ -33,8 +53,8 @@ namespace CLED.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            message = Request.Form[nameof(message)];
-            lang = Request.Form[nameof(lang)];
+            message = Input.Message;
+            lang = Input.Language;
 
             var response = await _client.GetAsync(" http://127.0.0.1:8000/api?seed=+" + message + "&lang=" + lang);
             var result = await response.Content.ReadAsStringAsync();

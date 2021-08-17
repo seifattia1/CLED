@@ -1,62 +1,10 @@
 ﻿@page
 @model CLED.Pages.problemOutputModel
 @{
-    Layout="_Layout";
+    Layout = "_Layout";
 }
 
-
-<h1>Make a Drawing!</h1>
-<div class="col-md">
-
-    <label>
-        @{
-
-            string @urlpath = "";
-
-            if (Model.List7 != null)
-            {
-                foreach (var @a in Model.List7)
-                {
-                    string[] ad = a.ToArray();
-
-
-
-                    foreach (var item in a)
-                    {
-
-                        if (((item.Contains("http://")) || item.Contains("https://")))
-                        {
-                            int i = Int32.Parse(ad[3]);
-                            urlpath = @item.ToString();
-                            if ((ad[1] != "PROPN"))
-                            {
-
-                                <span>  <img id="sss" src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
-                                <span> @i</span>
-
-                            }
-
-                        }
-                    }
-                    if ((ad[1] == "PROPN"))
-                    {
-                        urlpath = ad[0].ToString();
-
-                        <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
-                    }
-
-
-
-                }
-
-
-            }
-        }
-    </label>
-</div>
-
-
-<div class="row drawingToolbar bg-secondary text-light">
+<div class="jsgrid-row drawingToolbar bg-secondary text-light">
     <div class="btn-toolbar">
         <div class="btn-group mr-2" role="group">
             <div id="undoComponent"></div>
@@ -103,36 +51,81 @@
     </div>
 </div>
 
-
-<div class="row editorContainer">
+<div class="jsgrid-row editorContainer">
     <div class="CanvasContainer">
         <div id="canvas"></div>
     </div>
 </div>
-<div class="row notificationBar noPrint">
+<div class="jsgrid-row notificationBar noPrint">
     <div class="col">
         <div id="StatusBar" class="float-right"></div>
     </div>
 </div>
 
-@section Scripts{
+<div class="container">
+    <div class="row-cols-auto">
+        <div id="images">
+            <label>
+                @{
 
+                    string @urlpath = "";
+
+                    if (Model.List7 != null)
+                    {
+                        foreach (var @a in Model.List7)
+                        {
+                            string[] ad = a.ToArray();
+
+
+
+                            foreach (var item in a)
+                            {
+
+                                if (((item.Contains("http://")) || item.Contains("https://")))
+                                {
+                                    int i = Int32.Parse(ad[3]);
+                                    urlpath = @item.ToString();
+                                    if ((ad[1] != "PROPN"))
+                                    {
+                                       
+                                            <span>  <img draggable="true" onload="loadImg('@urlpath.ToString()');" src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
+
+                                        
+                                    }
+
+                                }
+                            }
+                            if ((ad[1] == "PROPN"))
+                            {
+                                urlpath = ad[0].ToString();
+
+                                <span> <img draggable="true" onload="loadImg('@urlpath.ToString()');" src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
+                            }
+                        }
+
+
+                    }
+                }
+            </label>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/fabric.js/fabric.min.js"></script>
     <script src="~/js/drawingEditor.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.2/fabric.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha512-3n19xznO0ubPpSwYCRRBgHh63DrV+bdZfHK52b1esvId4GsfwStQNPJFjeQos2h3JwCmZl0/LgLxSKMAI55hgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         var editor;
-        var savingLocked = true;
+        var savingLocked = false;
         const savingMessage = '<div id="Saving"><i class="fa fa-spin fa-cog "></i>Saving...</div>';
         $(function () {
             //Calculate canvas height as a function of the window size.
-            var canvasHeight = (window.innerHeight - $('#canvas').offset().top) * .9;
-            var canvasWidth = $('#canvas').width();
 
             //Instantiate our new editor
             //The canvas is created inside this constructor, using the selector passed.
-            editor = new DrawingEditor('canvas', canvasHeight, canvasWidth);
-
+            editor = new DrawingEditor('canvas', '747px', '1103px');
             //Create a list of available display components
             const components = [
                 { id: '#lineDisplayComponent', type: 'line' },
@@ -149,53 +142,37 @@
                 { id: '#undoComponent', type: 'undo' },
                 { id: '#redoComponent', type: 'redo' }
             ];
-
             //Add the components to the DrawingEditor, which will render them.
             editor.addComponents(components);
             $('#lineDisplayComponent').click();
-
-
-   
-
-
             $("html").on('keydown', function (event) {
                 const key = event.key;
                 if (key == "Delete") {
                     editor.deleteSelected();
+                    
                 }
             });
-
             editor.saveFunc = saveDrawing();
         });
 
-        function saveDrawing() {
-            if (!savingLocked) {
-                showSaving();
-                const drawing = {
-                    DrawingContent: JSON.stringify(editor.getJson()),
-                };
+        function loadImg(url) {
+            fabric.Image.fromURL(url, function (img) {
+                this.editor.canvas.add(img);
+                img.scaleToHeight(100);
+                img.scaleToWidth(100);
 
-                $.ajax({
-                    type: "POST",
-                    data: drawing,
-                    async: true,
-                    url: '?handler=Save'
-                }).done(function (data) {
-                    hideSaving();
-                }).fail(function () {
-                    hideSaving();
-                    alert('We are unable to save changes at this time.');
-                });
-            }
+            });
         }
 
+        function saveDrawing() {
+          
+        }
         function showSaving() {
             message = savingMessage;
             $('#StatusBar').html(message);
             savingLocked = true;
             setTimeout(function () { savingLocked = false; }, 1000);
         }
-
         function hideSaving() {
             if (savingLocked)
                 setTimeout(() => hideSaving(), 100);
@@ -204,5 +181,10 @@
                 message = '';
             }
         }
+
     </script>
+
 }
+
+
+
