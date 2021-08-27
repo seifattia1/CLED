@@ -25,13 +25,12 @@ namespace CLED.Areas.Identity
                 }
 
             }
-            string email = "seifeddine.attia.1@esprit.tn";
+          /*  string email = "seifeddine.attia.1@esprit.tn";
             string password = "Seifattia1";
             CLEDUser user = new CLEDUser();
             user.UserName = email;
             user.Email = email;
-            user.FirstName = "SeifEddine";
-            user.LastName = "Attia";
+           
             if (userManager.FindByEmailAsync(email).Result == null)
             {
                 
@@ -53,7 +52,7 @@ namespace CLED.Areas.Identity
                 {
                     Console.WriteLine(ex);
                 }
-            }
+            }*/
 
         }
     }

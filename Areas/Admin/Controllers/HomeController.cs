@@ -11,9 +11,17 @@ namespace CLED.Areas.Admin.Controllers
     [Authorize(Roles ="Admin")]
     public class HomeController : Controller
     {
+        [Route("/admin")]
         public IActionResult Index()
         {
             return View();
         }
+
+        [Route("/admin/supportclient")]
+        public IActionResult ChatBox()
+        {
+            return View();
+        }
+        
     }
 }

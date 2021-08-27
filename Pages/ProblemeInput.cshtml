@@ -7,94 +7,117 @@
 }
 
 
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5"><span class="px-2">CLED</span></p>
+            <h1 class="mb-4">Illustrator | << Input >></h1>
+        </div>
+        <div class="row">
+            <div class="col mb-5">
+                <div class="form">
+                    <form class="form" method="post">
 
+                        <div class="form-group">
+                            <div class="select-item">
+                                <select asp-for="Input.Language" class="custom-select">
+                                    <option disabled selected value="">Open this select menu</option>
+                                    <option value="en">English</option>
+                                    <option value="fr">French</option>
+                                    <option value="ar">Arabe</option>
+                                </select>
+                                <span asp-validation-for="Input.Language" class="alert-danger"></span>
 
-        <form class="form" method="post">
-            <fieldset>
-                <legend class="text-center">Problem Input</legend>
-                <div class="form-group">
-                    <div class="flex-xl-row">
-                        <div class="col-md-10">
-                            <select asp-for="Input.Language" class="custom-select">
-                                <option disabled selected value="">Open this select menu</option>
-                                <option value="en">English</option>
-                                <option value="fr">French</option>
-                                <option value="ar">Arabe</option>
-                            </select>
-                            <span asp-validation-for="Input.Language"  class="alert-danger" ></span>
+                            </div>
                         </div>
+                        <!-- Message body -->
+                        <div class="form-group">
+                            <div class="os-textarea-cover">
+                                <textarea asp-for="Input.Message" class="form-control" style="resize:none;" placeholder="Please enter your Problem here..." rows="15"></textarea>
+                                <span asp-validation-for="Input.Message" class="alert-danger"></span>
+                            </div>
+
+
+                        </div>
+                        <!-- Form actions -->
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary py-2 px-4">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            <div class="col-lg-5 mb-5" style="margin: inherit;">
+                <h4>To get a result you need to : </h4>
+                <div class="d-flex">
+                    <i class="fa fa-first-order d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle" style="width: 5px; height: 5px;"></i>
+                    <div class="pl-3">
+                        <h5>Select the problem language </h5>
                     </div>
                 </div>
-                <!-- Message body -->
-                <div class="form-group">
-                    <div class="flex-xl-row">
-                        <div class="col-md-10">
-                            <textarea asp-for="Input.Message" class="form-control" style="resize:none;" placeholder="Please enter your Problem here..." rows="15"></textarea>
-                            <span asp-validation-for="Input.Message" class="alert-danger" ></span>
-                        </div>
-                        
+                <div class="d-flex">
+                    <i class="fa fa-first-order d-inline-flex align-items-center justify-content-center bg-primary text-secondary rounded-circle" style="width: 5px; height: 5px;"></i>
+                    <div class="pl-3">
+                        <h5>Enter yout problem </h5>
                     </div>
                 </div>
-                <!-- Form actions -->
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                </div>
-            </fieldset>
-        </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
 
-<div class="col-md">
+            <div class="col-md">
 
-    <label>
-        @{
+                <label>
+                    @{
 
-            string @urlpath = "";
+                        string @urlpath = "";
 
-            if (Model.list3 != null)
-            {
-                foreach (var @a in Model.list3)
-                {
-                    string[] ad = a.ToArray();
-
-
-
-                    foreach (var item in a)
-                    {
-
-                        if (((item.Contains("http://")) || item.Contains("https://")))
+                        if (Model.list3 != null)
                         {
-                            int i = Int32.Parse(ad[3]);
-                            urlpath = @item.ToString();
-                            if ((ad[1] != "PROPN"))
+                            foreach (var @a in Model.list3)
                             {
+                                string[] ad = a.ToArray();
 
-                                <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
-                                <span> @i</span>
+
+
+                                foreach (var item in a)
+                                {
+
+                                    if (((item.Contains("http://")) || item.Contains("https://")))
+                                    {
+                                        int i = Int32.Parse(ad[3]);
+                                        urlpath = @item.ToString();
+                                        if ((ad[1] != "PROPN"))
+                                        {
+
+                                            <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
+                                            <span> @i</span>
+
+                                        }
+
+                                    }
+                                }
+                                if ((ad[1] == "PROPN"))
+                                {
+                                    urlpath = ad[0].ToString();
+
+                                    <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
+                                }
+
+
 
                             }
 
+
                         }
                     }
-                    if ((ad[1] == "PROPN"))
-                    {
-                        urlpath = ad[0].ToString();
-
-                        <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
-                    }
-
-
-
-                }
-
-
+                </label>
+            </div>
+            @section Scripts {
+                <partial name="_ValidationScriptsPartial" />
             }
-        }
-    </label>
-</div>
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
 

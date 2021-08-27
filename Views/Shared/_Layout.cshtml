@@ -1,51 +1,33 @@
 ﻿<!DOCTYPE html>
 <html lang="fr-fr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CLED</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@1,200&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <meta charset="utf-8">
+    <title>CLED | Index</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <partial name="Layout/_Styles" />
+    <partial name="Layout/_Scripts" />
 </head>
 <body>
-        <header>
-            <div class="container">
-                <nav class="navbar navbar-expand-sm navbar-dark border-bottom box-shadow border" style="background-color: #177cb3;">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CLED</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
+    <partial name="Layout/_TopNavigation" />
 
-                    </div>
-                </nav>
-            </div>
 
-        </header>
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
+    @RenderBody()
 
-        <div class="container-lg">
-            <footer class="border-top footer text-muted">
-                 &copy; 2021 - CLED - <a asp-area="" asp-controller="Home" asp-action="Privacy"></a>
-            </footer>
-        </div>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-6">
+        <partial name="Layout/_Footer" />
+    </div>
+    <!-- Footer End -->
 
+    @if (IsSectionDefined("scripts"))
+    {
         @RenderSection("Scripts", required: false)
-   
+    }
+
+
+
+
 </body>
+
 </html>

@@ -34,6 +34,7 @@ namespace CLED
                     logger.LogError(ex, "An Error Occured while seeding the Database");
                 }
             }
+            
             host.Run();
         }
 

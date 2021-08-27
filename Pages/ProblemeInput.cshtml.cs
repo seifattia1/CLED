@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CLED.Pages
 {
+    
     [Authorize]
     public class ProblemeInputModel : PageModel
     {

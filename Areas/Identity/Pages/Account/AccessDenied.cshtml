@@ -1,10 +1,21 @@
 ﻿@page
 @model AccessDeniedModel
-@{
-    ViewData["Title"] = "Access denied";
-}
+@{ ViewData["Title"] = "Access denied";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml"; 
+    }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="login-container">
+
+        <h1 class="text-danger">@ViewData["Title"]</h1>
+        <p class="text-danger">You do not have access to this resource.</p>
+        <div class="btn btn-outline-danger">
+            <a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">ٌReturn to Home Page</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

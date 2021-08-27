@@ -1,43 +1,18 @@
-﻿@{
-    Layout = "/Views/Shared/_Layout.cshtml";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="card login-logout-tab">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item bg-gradient-primary">
-                        <a class="nav-link" href='/Identity/Account/Login'> SingIn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href='/Identity/Account/Register'> SignUp</a>
-                    </li>
-                </ul>
-            </div>
+    <partial name="AuthLayout/_Styles" />
 
-        </div>
-    </div>
-    <div class="card-content border border-primary">
-        <div class="row">
-            <div class="col-md-12">
-                @RenderBody()
-            </div>
-        </div>
-    </div>
-</div>
+</head>
+<body>
 
-@section Scripts{
-    @RenderSection("Scripts", required: false)
-    <script>
-    $(function () {
-        var current = location.pathname;
-        $('.nav-tabs li a').each(function () {
-            var $this = $(this);
-            if (current.indexOf($this.attr('href')) !== -1) {
-                $this.addClass('active');
-            }
-        })
-    });
-    </script>
-}
+    @RenderBody()
+
+    <partial name="AuthLayout/_Scripts" />
+
+    @RenderSection("Scripts", required: true)
+</body>
+</html>

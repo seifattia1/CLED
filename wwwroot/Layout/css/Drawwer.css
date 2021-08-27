@@ -1,0 +1,16 @@
+﻿.library {
+    display: flex;
+    flex-direction: column;
+    background-color: ghostwhite;
+    margin-left: 10%;
+    border: 3px solid #17a2b8;
+    width: 150px
+}
+
+.wrapper {
+    display: flex;
+    justify-content:center;
+    
+    
+}
+

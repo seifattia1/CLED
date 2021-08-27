@@ -1,0 +1,32 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5"><span class="px-2">CLED</span></p>
+            <h1 class="mb-4">CLED | Edit Profile</h1>
+        </div>
+        <div class="row">
+            <div class="col mb-5">
+                <div>
+                    <h4>Change your account settings</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <partial name="_ManageNav" />
+                        </div>
+                        <div class="col-md-9">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+                @RenderSection("Scripts", required: false)
+            </div>
+        </div>
+    </div>
+</div>

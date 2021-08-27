@@ -1,0 +1,39 @@
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+<!-- Libraries Stylesheet -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.20/fabric.min.js"></script>
+<script src="~/js/drawingEditor.js" asp-append-version="true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Layout/lib/easing/easing.min.js"></script>
+<script src="~/Layout/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/Layout/lib/isotope/isotope.pkgd.min.js"></script>
+<script src="~/Layout/lib/lightbox/js/lightbox.min.js"></script>
+<!-- Contact Javascript File -->
+<script src="~/Layout/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/Layout/mail/contact.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dashjs/1.6.0/dash.all.js"></script>
+<script src="~/Layout/js/main.js"></script>
+
+<script>
+    function loadImg(url) {
+        fabric.Image.fromURL(url, function (img) {
+            this.editor.canvas.add(img);
+            img.scaleToHeight(200);
+            img.scaleToWidth(200);
+        });
+    };
+
+    function downloadCanvas() {
+        this.editor.canvas.toBlob(function (blob) {
+            saveAs(blob, "Myimg.png");
+        });
+    };
+</script>

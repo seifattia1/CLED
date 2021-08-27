@@ -4,68 +4,81 @@
     Layout = "_Layout";
 }
 
-<div class="jsgrid-row drawingToolbar bg-secondary text-light">
-    <div class="btn-toolbar">
-        <div class="btn-group mr-2" role="group">
-            <div id="undoComponent"></div>
-            <div id="redoComponent"></div>
-            <button onclick="saveDrawing(event); return false;" title="Save" class="btn btn-success">
-                <i class="fa fa-save d-inline"></i>
-                <span>Save</span>
-            </button>
-            <div id="deleteComponent"></div>
-        </div>
+<div class="container-fluid bg-primary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center " style="min-height: 160px">
+        <h3 class="display-3 font-weight-bold text-white">CLED - Illustrator</h3>
     </div>
-    <div class="btn-toolbar">
-        <label class="col-form-label controlLabel">Tools:</label>
-        <div class="d-inline-block">
-            <div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="Drawing Components">
-                <div id="polylineDisplayComponent"></div>
-                <div id="lineDisplayComponent"></div>
-                <div id="rectangleDisplayComponent"></div>
-                <div id="ovalDisplayComponent"></div>
-                <div id="triangleDisplayComponent"></div>
-                <div id="textDisplayComponent"></div>
+</div>
+
+<div class="container-fluid pt-5">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5"><span class="px-2">CLED</span></p>
+            <h1 class="mb-4">Illustrator | << Problem Output >></h1>
+        </div>
+        <div class="wrapper">
+            <div class="painter">
+                <div class="jsgrid-row drawingToolbar bg-secondary text-light">
+                    <div class="btn-toolbar">
+                        <div class="btn-group mr-2" role="group">
+                            <div id="undoComponent"></div>
+                            <div id="redoComponent"></div>
+                            <div id="deleteComponent" title="Delete"></div>
+                            <button onclick="" title="save" class="btn btn-success">
+                                <i class="fa fa-save d-inline"></i>
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="btn-toolbar">
+                        <label class="col-form-label controlLabel">Tools:</label>
+                        <div class="d-inline-block">
+                            <div class="btn-group btn-group-toggle" role="group" data-toggle="buttons" aria-label="Drawing Components">
+                                <div id="polylineDisplayComponent"></div>
+                                <div id="lineDisplayComponent"></div>
+                                <div id="rectangleDisplayComponent"></div>
+                                <div id="ovalDisplayComponent"></div>
+                                <div id="triangleDisplayComponent"></div>
+                                <div id="textDisplayComponent"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="btn-toolbar">
+                        <label class="col-form-label controlLabel d-inline">Size:</label>
+                        <div id="lineThicknessComponent"></div>
+
+                        <div class="separator"></div>
+
+                        <label class="col-form-label controlLabel d-inline">Style:</label>
+                        <div id="lineTypeComponent"></div>
+
+                        <div class="separator"></div>
+
+                        <label class="col-form-label controlLabel d-inline">Lines:</label>
+                        <div id="lineColorComponent"></div>
+
+                        <div class="separator"></div>
+
+                        <label class="col-form-label controlLabel ">Fill:</label>
+                        <div id="fillColorComponent"></div>
+                    </div>
+                </div>
+
+                <div class="jsgrid-row editorContainer">
+                    <div class="CanvasContainer" id="CanvasContainer">
+                        <div id="canvas">
+                        </div>
+                    </div>
+                </div>
+                <div class="jsgrid-row notificationBar noPrint">
+                    <div class="col">
+                        <div id="StatusBar" class="float-right"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="separator"></div>
-    <div class="btn-toolbar">
-        <label class="col-form-label controlLabel d-inline">Size:</label>
-        <div id="lineThicknessComponent"></div>
+            <div id="images" class="library overflow-y-scroll">
 
-        <div class="separator"></div>
-
-        <label class="col-form-label controlLabel d-inline">Style:</label>
-        <div id="lineTypeComponent"></div>
-
-        <div class="separator"></div>
-
-        <label class="col-form-label controlLabel d-inline">Lines:</label>
-        <div id="lineColorComponent"></div>
-
-        <div class="separator"></div>
-
-        <label class="col-form-label controlLabel ">Fill:</label>
-        <div id="fillColorComponent"></div>
-    </div>
-</div>
-
-<div class="jsgrid-row editorContainer">
-    <div class="CanvasContainer">
-        <div id="canvas"></div>
-    </div>
-</div>
-<div class="jsgrid-row notificationBar noPrint">
-    <div class="col">
-        <div id="StatusBar" class="float-right"></div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row-cols-auto">
-        <div id="images">
-            <label>
                 @{
 
                     string @urlpath = "";
@@ -87,10 +100,7 @@
                                     urlpath = @item.ToString();
                                     if ((ad[1] != "PROPN"))
                                     {
-                                       
-                                            <span>  <img draggable="true" onload="loadImg('@urlpath.ToString()');" src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
-
-                                        
+                                        <img draggable="true" onload="loadImg('@urlpath');" src="@urlpath" class="img-responsive" style="height: 75px; width: 150px;" />
                                     }
 
                                 }
@@ -99,22 +109,23 @@
                             {
                                 urlpath = ad[0].ToString();
 
-                                <span> <img draggable="true" onload="loadImg('@urlpath.ToString()');" src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
+                                <img draggable="true" onload="loadImg('@urlpath');" src="@urlpath" class="img-responsive" style="height: 75px; width: 150px;" />
                             }
                         }
 
 
                     }
+                    
                 }
-            </label>
+
+            </div>
         </div>
     </div>
+
 </div>
 
+
 @section Scripts{
-    <script src="~/lib/fabric.js/fabric.min.js"></script>
-    <script src="~/js/drawingEditor.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha512-3n19xznO0ubPpSwYCRRBgHh63DrV+bdZfHK52b1esvId4GsfwStQNPJFjeQos2h3JwCmZl0/LgLxSKMAI55hgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         var editor;
@@ -149,40 +160,100 @@
                 const key = event.key;
                 if (key == "Delete") {
                     editor.deleteSelected();
-                    
+
                 }
             });
-            editor.saveFunc = saveDrawing();
         });
 
-        function loadImg(url) {
-            fabric.Image.fromURL(url, function (img) {
-                this.editor.canvas.add(img);
-                img.scaleToHeight(100);
-                img.scaleToWidth(100);
+        function handleDragStart(e) {
+            [].forEach.call(images, function (img) {
+                img.classList.remove('img_dragging');
+            });
+            this.classList.add('img_dragging');
+        }
 
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary. Allows us to drop.
+            }
+
+            e.dataTransfer.dropEffect = 'copy'; // See the section on the DataTransfer object.
+            // NOTE: comment above refers to the article (see top) -natchiketa
+
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            // this / e.target is the current hover target.
+            this.classList.add('over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('over'); // this / e.target is previous target element.
+        }
+
+        function handleDrop(e) {
+            // this / e.target is current target element.
+
+            if (e.stopPropagation) {
+                e.stopPropagation(); // stops the browser from redirecting.
+            }
+
+            var img = document.querySelector('#images img.img_dragging');
+
+            console.log('event: ', e);
+
+            var newImage = new fabric.Image(img, {
+            });
+            newImage.set({
+                left: 0,
+                top: 0,
+                with: 300,
+                height: 300,
+            });
+
+
+            editor.canvas.add(newImage);
+
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            // this/e.target is the source node.
+            [].forEach.call(images, function (img) {
+                img.classList.remove('img_dragging');
             });
         }
 
-        function saveDrawing() {
-          
-        }
-        function showSaving() {
-            message = savingMessage;
-            $('#StatusBar').html(message);
-            savingLocked = true;
-            setTimeout(function () { savingLocked = false; }, 1000);
-        }
-        function hideSaving() {
-            if (savingLocked)
-                setTimeout(() => hideSaving(), 100);
-            else {
-                $('#Saving').remove();
-                message = '';
-            }
+        if (Modernizr.draganddrop) {
+            // Browser supports HTML5 DnD.
+
+            // Bind the event listeners for the image elements
+            var images = document.querySelectorAll('#images img');
+            [].forEach.call(images, function (img) {
+                img.addEventListener('dragstart', handleDragStart, false);
+                img.addEventListener('dragend', handleDragEnd, false);
+            });
+            // Bind the event listeners for the canvas
+            var canvasContainer = document.getElementById('CanvasContainer');
+            canvasContainer.addEventListener('dragenter', handleDragEnter, false);
+            canvasContainer.addEventListener('dragover', handleDragOver, false);
+            canvasContainer.addEventListener('dragleave', handleDragLeave, false);
+            canvasContainer.addEventListener('drop', handleDrop, false);
+        } else {
+            // Replace with a fallback to a library solution.
+            alert("This browser doesn't support the HTML5 Drag and Drop API.");
         }
 
+        /*
+        NOTE: the start and end handlers are events for the <img> elements; the rest are bound to
+        the canvas container.
+        */
+
+
     </script>
+
+
 
 }
 

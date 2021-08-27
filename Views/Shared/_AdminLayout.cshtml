@@ -6,6 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>CLED | Admin Area</title>
     <partial name="AdminLTE/_Styles" />
+
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -17,7 +18,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                         </div>
-                  
+
                     </div>
                 </div>
             </div>
@@ -36,5 +37,8 @@
         <partial name="AdminLTE/_Footer" />
     </div>
     <partial name="AdminLTE/_Scripts" />
+
+    @RenderSection("Scripts", required: false)
+
 </body>
 </html>

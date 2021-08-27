@@ -1,5 +1,6 @@
 ﻿@import "../lib/bootstrap/scss/bootstrap";
 
+
 @media print {
     @page {
         size: auto;
@@ -208,18 +209,7 @@ canvas {
         }
     }
 }
-#canvas-container {
-    position: relative;
-    width: 800px;
-    height: 600px;
-    box-shadow: 0 0 5px 1px black;
-    margin: 10px auto;
-    border: 5px solid transparent;
-}
 
-#canvas-container.over {
-    border: 5px dashed cyan;
-}
 
 #images img.img_dragging {
     opacity: 0.4;

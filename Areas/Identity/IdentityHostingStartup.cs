@@ -16,19 +16,8 @@ namespace CLED.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<CLEDContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("CLEDContextConnection")));
+               
 
-                services.AddDefaultIdentity<CLEDUser>(options =>
-                {
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.SignIn.RequireConfirmedAccount = false;
-
-                })
-
-                    .AddRoles<IdentityRole>().AddEntityFrameworkStores<CLEDContext>();
-                
             });
         }
     }
