@@ -1,0 +1,48 @@
+﻿@model UserRoleViewModel
+@{
+    ViewData["Title"] = "Edit User Role";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col mb-5">
+        <div class="container">
+            <div class="container-fluid pt-5">
+                <div class="container">
+                    <div class="text-center pb-2">
+                        <h1 class="mb-4">Management | << Edit User Role >></h1>
+                    </div>
+                </div>
+            </div>
+            <form method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i>Add/Remove Role</i>
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <input type="hidden" asp-for="UserName" />
+                        @for (int i = 0; i < Model.Roles.Count; i++)
+                        {
+                            <div class="form-check m-1">
+                                <input type="hidden" asp-for="@Model.Roles[i].Name" />
+                                <input asp-for="@Model.Roles[i].IsSelected" class="form-check-input" />
+                                <label class="form-check-label" asp-for="@Model.Roles[i].IsSelected">
+                                    @Model.Roles[i].Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary"> Save</button>
+                        <a asp-action="Index" class="btn btn-dark"> Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

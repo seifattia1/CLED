@@ -29,12 +29,13 @@
                     @Html.DisplayNameFor(m => m.Input.RememberMe)
                 </label>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-sign-in btn-success">Sign in</button></br>
-            </div>
-            <div class="form-group">
-                <a class="btn btn-sign-up btn-outline-info  px-4" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-            </div>
+        
+                <div class="form-group">
+                    <button type="submit" class="btn btn-sign-in btn-success">Sign in</button></br>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-sign-up btn-outline-info  px-4" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                </div>
         </form>
     </div>
 </div>

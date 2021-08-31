@@ -45,8 +45,16 @@
                             <button type="submit" class="btn btn-primary py-2 px-4">Submit</button>
                         </div>
                     </form>
+                    @if (ViewData["Error"] != null)
+                    {
+                        <script type="text/javascript">
+
+                             alert("@ViewData["Error"]");
+
+                        </script>
+                    }
                 </div>
-            </div> 
+            </div>
             <div class="col-lg-5 mb-5" style="margin: inherit;">
                 <h4>To get a result you need to : </h4>
                 <div class="d-flex">
@@ -69,43 +77,44 @@
 
 
 
-            <div class="col-md">
+@*     <div class="col-md">
 
-                <label>
-                    @{
+        <label>
+            @{
+                try
+                {
+                    string @urlpath = "";
 
-                        string @urlpath = "";
-
-                        if (Model.list3 != null)
+                    if (Model.list3 != null)
+                    {
+                        foreach (var @a in Model.list3)
                         {
-                            foreach (var @a in Model.list3)
+                            string[] ad = a.ToArray();
+
+
+
+                            foreach (var item in a)
                             {
-                                string[] ad = a.ToArray();
 
-
-
-                                foreach (var item in a)
+                                if (((item.Contains("http://")) || item.Contains("https://")))
                                 {
-
-                                    if (((item.Contains("http://")) || item.Contains("https://")))
+                                    int i = Int32.Parse(ad[3]);
+                                    urlpath = @item.ToString();
+                                    if ((ad[1] != "PROPN"))
                                     {
-                                        int i = Int32.Parse(ad[3]);
-                                        urlpath = @item.ToString();
-                                        if ((ad[1] != "PROPN"))
-                                        {
 
-                                            <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
-                                            <span> @i</span>
-
-                                        }
+                                        <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
+                                        <span> @i</span>
 
                                     }
-                                }
-                                if ((ad[1] == "PROPN"))
-                                {
-                                    urlpath = ad[0].ToString();
 
-                                    <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
+                                }
+                            }
+                            if ((ad[1] == "PROPN"))
+                            {
+                                urlpath = ad[0].ToString();
+
+                                <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
                                 }
 
 
@@ -115,9 +124,18 @@
 
                         }
                     }
-                </label>
-            </div>
-            @section Scripts {
-                <partial name="_ValidationScriptsPartial" />
-            }
+
+                    catch (System.Exception ex)
+                    {
+
+                        <script>
+                            alert(@ex, "Please refresh the page");
+                        </script>
+                    }
+                }
+        </label>
+    </div>*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+@{
+
+    ViewData["Title"] = "Role Manager";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col mb-5">
+        <div class="container">
+            <div class="container-fluid pt-5">
+                <div class="container">
+                    <div class="text-center pb-2">
+                        <h1 class="mb-4">Management | << Roles >></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Role management</h3>
+                    <partial name="_RoleForm" model="new AdministrationCreateRoleViewModel()" />
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>Id</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td>@role.Id</td>
+                                    <td>@role.Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

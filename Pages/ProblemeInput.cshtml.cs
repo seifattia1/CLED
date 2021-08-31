@@ -17,6 +17,7 @@ namespace CLED.Pages
     [Authorize]
     public class ProblemeInputModel : PageModel
     {
+       
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -52,25 +53,36 @@ namespace CLED.Pages
         public void OnGet()
         {
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             message = Input.Message;
             lang = Input.Language;
+            try
+            {
+                var response = await _client.GetAsync(" http://127.0.0.1:8000/api?seed=+" + message + "&lang=" + lang);
+                var result = await response.Content.ReadAsStringAsync();
+                resultJson objActualField = JsonConvert.DeserializeObject<resultJson>(result);
+                foreach (var res in objActualField.data)
+                {
 
-            var response = await _client.GetAsync(" http://127.0.0.1:8000/api?seed=+" + message + "&lang=" + lang);
-            var result = await response.Content.ReadAsStringAsync();
-            resultJson objActualField = JsonConvert.DeserializeObject<resultJson>(result);
-            foreach (var res in objActualField.data) {
+                    list1.Add(res.ToList());
 
-                list1.Add(res.ToList());
 
-               
+                }
+                list3 = list1;
+
+                TempData["ListResults"] = System.Text.Json.JsonSerializer.Serialize(list3);
+
+                return RedirectToPage("/problemoutput");
             }
-            list3 = list1;
+            catch (System.Exception ex)
+            {
+               ViewData["Error"] = " Internal Server Error Please Try Again !!! ";
 
-            TempData["ListResults"]= System.Text.Json.JsonSerializer.Serialize(list3);
-
-            return RedirectToPage("/problemoutput") ;
+                return Page();
+            }
+           
 
         
         }

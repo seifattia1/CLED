@@ -15,10 +15,11 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             @if (SignInManager.IsSignedIn(User))
             {
-                <div class="navbar-nav font-weight-bold mx-auto py-0">
-                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link ">Home</a>
-                    <a href="/problemeinput" class="nav-item nav-link ">Illustrator</a>
-                </div>
+            <div class="navbar-nav font-weight-bold mx-auto py-0">
+                <a asp-controller="Home" asp-action="Index" class="nav-item nav-link ">Home</a>
+
+                <a href="/problemeinput" class="nav-item nav-link ">Illustrator</a>
+            </div>
             }
                 <div class="collapse navbar-collapse collapse  flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
