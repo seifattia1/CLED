@@ -19,6 +19,7 @@ namespace CLED.Areas.Admin.Controllers.Manager
         private readonly UserManager<CLEDUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
+        
         public UsersController(UserManager<CLEDUser> userManager,RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
