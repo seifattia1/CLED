@@ -1,20 +1,68 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@using CLED.Areas.Identity.Data
+
+@inject SignInManager<CLEDUser> SignInManager
+@inject UserManager<CLEDUser> UserManager
+
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-blue elevation-4">
+<aside class="main-sidebar font-weight-bold sidebar-dark-gray elevation-4">
     <!-- Brand Logo -->
-    <a class="brand-link">
-        <img src="~/AdminLTE/img/C-logos_white.png" alt="Admin Area" class="brand-image-xl img-circle elevation-5">
-        <span class="brand-text font-weight-light">Admin Area</span>
+    <a class="brand-link ml-2">
+        <i class="flaticon-038-locker"></i>
+        <span class="text-white ml-1">CLED Admin Area</span>
     </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="info">
-                <a class="d-block">Pages: </a>
-            </div>
-        </div>
 
-      </div>
+    <!-- Sidebar -->
+    <div class="sidebar text-secondary bg-gradient-dark ">
+        <!-- Sidebar user panel (optional) -->
+
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image disabled">
+                <img src="~/images/icons/@UserManager.GetUserAsync(User).Result.Avatar.Trim()" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info text-white"> Welcome '@UserManager.GetUserName(User)'</div>
+        </div>
+    </div>
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a asp-controller="Users" asp-action="Index" class="nav-link">
+                    <p>
+                        Manage Users
+
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Roles" asp-action="Index" class="nav-link">
+                    <p>
+                        Manage Roles
+
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Home" asp-action="ChatBox" class="nav-link">
+                    <p>
+                        Support Client
+
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Facture" asp-action="Index" class="nav-link">
+                    <p>
+                        Invoices
+
+                    </p>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
 </aside>

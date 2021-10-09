@@ -39,6 +39,9 @@ namespace CLED.Areas.Identity.Pages.Account.Manage
             [Display(Name = "FullName")]
             public string FullName { get; set; }
 
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
             [Required]
             [Phone]
             [Display(Name = "Phone number")]
@@ -50,13 +53,14 @@ namespace CLED.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var fullname = user.FullName;
-       
+            var Country = user.coutry;
             Username = userName;
 
             Input = new InputModel
             {
 
                 FullName = fullname,
+                Country = Country,
                 PhoneNumber = phoneNumber
             };
         }
@@ -88,18 +92,29 @@ namespace CLED.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+
+            
+            if (Input.PhoneNumber != phoneNumber || Input.Country != Request.Form["country-select"].ToString() || Input.FullName != user.FullName )
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+                Input.Country = Request.Form["country-select"].ToString();
+                user.FullName = Input.FullName;
+                user.coutry = Input.Country.ToString();
+                user.PhoneNumber = Input.PhoneNumber;
+                var setPhoneResult = await _userManager.UpdateAsync(user);
                 if (!setPhoneResult.Succeeded)
                 {
+
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
+                else
+                {
+                    await _signInManager.RefreshSignInAsync(user);
+                    StatusMessage = "Your profile has been updated";
+                   
+                }
             }
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
     }

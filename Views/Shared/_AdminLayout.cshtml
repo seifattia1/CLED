@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>CLED | Admin Area</title>
+    <partial name="AdminLTE/_Scripts" />
     <partial name="AdminLTE/_Styles" />
-
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition visible-sidebar-mini">
     <div class="wrapper">
+
         <partial name="AdminLTE/_TopNavigation" />
         <partial name="AdminLTE/_MainNavigation" />
         <div class="content-wrapper">
@@ -36,9 +37,10 @@
         </aside>
         <partial name="AdminLTE/_Footer" />
     </div>
-    <partial name="AdminLTE/_Scripts" />
+
 
     @RenderSection("Scripts", required: false)
-
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary p-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
 </body>
 </html>

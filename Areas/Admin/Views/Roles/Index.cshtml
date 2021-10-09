@@ -24,23 +24,35 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr class="bg-primary text-white">
-                                <th>Id</th>
-                                <th>Role</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var role in Model)
-                            {
-                                <tr>
-                                    <td>@role.Id</td>
-                                    <td>@role.Name</td>
+                    <form method="post">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="bg-primary text-white">
+                                    <th>Id</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody>
+                                @for (int i = 0; i < Model.Count(); i++)
+                                {
+
+
+
+                                    <tr>
+                                        <td>@Model.ToArray()[i].Id</td>
+                                        <td>@Model.ToArray()[i].Name</td>
+
+                                        <td>
+                                            <button style=" display: flex; justify-content: center; align-items: center;" type="submit" asp-action="Index" asp-route-Id="@Model.ToArray()[i].Id" class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -48,4 +60,14 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="html2pdf.bundle.min.js"></script>
+
+    <script>
+        function generatePDF() {
+            // Choose the element that our invoice is rendered in.
+            const element = document.getElementById('invoice');
+            // Choose the element and save the PDF for our user.
+            html2pdf().from(element).save();
+        }
+    </script>
 }

@@ -19,42 +19,41 @@ namespace CLED
     {
         public static async Task Main(string[] args)
         {
-            var host = BuildWebHost(args).Build();
-            using var scope = host.Services.CreateScope();
+            var host = BuildWebHost(args);
+            var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var loggerFactory = services.GetRequiredService<ILoggerProvider>();
             var logger = loggerFactory.CreateLogger("app");
             try
             {
+                var context = services.GetRequiredService<CLEDContext>();
                 var userManager = services.GetRequiredService<UserManager<CLEDUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                 await Seeds.DefaultRoles.SeedAsync(roleManager);
-                await Seeds.DefaultUsers.SeedAdminUserAsync(userManager,roleManager);
+                await Seeds.DefaultUsers.SeedAdminUserAsync(userManager, roleManager);
                 await Seeds.DefaultRoles.SeedAsync(roleManager);
+
                 logger.LogInformation("Data Seeded");
                 logger.LogInformation("Application Started");
             }
             catch (System.Exception ex)
             {
 
-                logger.LogWarning(ex,"An Error occured while seeding data");
+                logger.LogWarning(ex, "An Error occured while seeding data");
             }
 
-          
+
 
             host.Run();
         }
 
-        private static IHostBuilder BuildWebHost(string[] args) =>
+        private static IWebHost BuildWebHost(string[] args) =>
 
-            Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder => { 
+             WebHost.CreateDefaultBuilder(args)
+                 .UseStartup<Startup>()
+                 .Build();
 
-            webBuilder.UseStartup<Startup>();
-             });
-         }       
-          
-        
+    }
     }
 

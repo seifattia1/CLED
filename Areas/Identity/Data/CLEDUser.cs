@@ -18,7 +18,11 @@ namespace CLED.Areas.Identity.Data
         public string Avatar { get; set; }
         public ICollection<Room> Rooms { get; set; }
         public ICollection<Message> Messages { get; set; }
-        
+        public string coutry { get; set; }
+
+
+        public bool usedOrnot { get; set; } = false;
+
 
     }
 }

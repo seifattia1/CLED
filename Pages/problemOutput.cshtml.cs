@@ -24,7 +24,10 @@ namespace CLED.Pages
         public IActionResult  OnGet()
         {
             var data = TempData["ListResults"] as string;
-             List7 =  JsonSerializer.Deserialize<List<List<string>>>(data);
+            if (data != null)
+                List7 = JsonSerializer.Deserialize<List<List<string>>>(data);
+            else if(data == null)
+               return RedirectToPage("problemeinput");
             return Page();
         }
 

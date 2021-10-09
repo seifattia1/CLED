@@ -93,9 +93,7 @@ namespace CLED.Areas.Admin.Controllers.Manager
 
             foreach (var role in model.Roles)
             {
-               
-          
-              
+                                    
                     if (userRoles.Any(r => r == role.Name) && !role.IsSelected)
                     {
                         
@@ -105,14 +103,31 @@ namespace CLED.Areas.Admin.Controllers.Manager
                     {
                         await _userManager.AddToRoleAsync(user, role.Name);
                     }
-
-               
-                  
-
-                
-               
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("/admin/manage/Users/")]
+        public async Task<IActionResult> Index(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+           var delete = await _userManager.DeleteAsync(user);
+
+            if (delete.Succeeded)
+            {
+              return  RedirectToAction(nameof(this.Index));
+
+            }
+
+          
+            return RedirectToAction(nameof(this.Index));
         }
     }
 }

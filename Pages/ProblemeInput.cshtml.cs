@@ -48,7 +48,7 @@ namespace CLED.Pages
             _client = client;
           
         }
-        public string[] k { get; set; }
+     
 
         public void OnGet()
         {
@@ -60,7 +60,7 @@ namespace CLED.Pages
             lang = Input.Language;
             try
             {
-                var response = await _client.GetAsync(" http://127.0.0.1:8000/api?seed=+" + message + "&lang=" + lang);
+                var response = await _client.GetAsync(" http://127.0.0.1:5000/" +message + "/" + lang);
                 var result = await response.Content.ReadAsStringAsync();
                 resultJson objActualField = JsonConvert.DeserializeObject<resultJson>(result);
                 foreach (var res in objActualField.data)

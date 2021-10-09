@@ -1,7 +1,7 @@
 ﻿<script src="~/lib/jquery/dist/jquery.js"></script>
 <!-- Libraries Stylesheet -->
 
-
+<script src="https://bootstrapformhelpers.com/assets/js/bootstrap-formhelpers.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.20/fabric.min.js"></script>
 <script src="~/js/drawingEditor.js" asp-append-version="true"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -31,9 +31,6 @@
         });
     };
 
-    function downloadCanvas() {
-        this.editor.canvas.toBlob(function (blob) {
-            saveAs(blob, "Myimg.png");
-        });
-    };
+   
 </script>
+

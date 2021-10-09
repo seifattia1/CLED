@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CLED.Areas.Identity.Pages.Account
 {
@@ -23,21 +24,36 @@ namespace CLED.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public void OnGet()
-        {
-        }
-
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnGet(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
-                return LocalRedirect(returnUrl);
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                return RedirectToPage();
+                return RedirectToAction("Index", "Home");
+            }
+      
+
+         
+         
+        }
+
+        public async Task<IActionResult> OnPost(string returnUrl = null)
+        {
+            
+              await _signInManager.SignOutAsync();
+              _logger.LogInformation("User logged out.");
+              if (returnUrl != null)
+              {
+                return RedirectToAction("Index", "Home");
+            }
+              else
+              {
+                return RedirectToAction("Index", "Home");
             }
         }
     }

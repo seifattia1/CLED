@@ -24,7 +24,7 @@
                             <div id="undoComponent"></div>
                             <div id="redoComponent"></div>
                             <div id="deleteComponent" title="Delete"></div>
-                            <button onclick="" title="save" class="btn btn-success">
+                            <button id="b" title="save" class="btn btn-success">
                                 <i class="fa fa-save d-inline"></i>
                                 <span>Save</span>
                             </button>
@@ -115,7 +115,11 @@
 
 
                     }
-                    
+                    else
+                    {
+                        RedirectToPage("ProblemeInput");
+                    }
+
                 }
 
             </div>
@@ -249,7 +253,10 @@
         NOTE: the start and end handlers are events for the <img> elements; the rest are bound to
         the canvas container.
         */
-
+        $("#b").click(function () {
+            var image = this.editor.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+            window.location.href = image;
+        });
 
     </script>
 

@@ -4,15 +4,17 @@
 @inject SignInManager<CLEDUser> SignInManager
 @inject UserManager<CLEDUser> UserManager
 
-
-<ul class="navbar-nav justify-content-between">
+<div id="placeholder"></div>
+<ul class="navbar-nav nav-pills nav-fill font-weight-bold ">
     @if (SignInManager.IsSignedIn(User))
     {
         @if (User.IsInRole("FreeUser"))
         {
-            <li class="nav-item">
-                <a id="manage" class="btn btn-outline-warning px-4" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                    <div class="row">
+
+            <li class="nav-item " style=" margin-top: 2px;">
+                
+                <a id="manage" asp-controller="checkout" asp-action="Index" class="nav-link text-warning" title="Manage">
+                   
                         <svg style="margin-right: 2px; margin-top: 6px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z" />
                             <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z" />
@@ -20,55 +22,49 @@
                             <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z" />
                         </svg>
                         <i class="bi bi-cash-coin">Be Premium</i>
-                    </div>
+                    
                 </a>
+                   
             </li>
         }
-        <li class="nav-item">
-            
-            <a id="manage" class="btn btn-outline-primary px-4" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                <div class="row">
-                    <svg style="margin-right: 2px; margin-top: 3px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    </svg>
-                    <i>Edit Profile</i>
-                </div>
+        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+        {
+
+            <li class="nav-item ">
+
+                <a id="manage" class="nav-link text-success" asp-area="admin" asp-page="">
+                    <img style="height: 31px; margin-right: 6px; padding-bottom: 4px;" class="user-avatar" src="https://www.pngfind.com/pngs/m/643-6438921_admin-comments-admin-icon-png-transparent-png.png" />
+                    Admin Area
+                </a>
+
+            </li>
+        }
+        <li class="nav-item ">
+
+            <a id="manage" class="nav-link text-success" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <img style="height: 31px; margin-right: 6px; padding-bottom: 4px;" class="user-avatar" src="~/images/icons/@UserManager.GetUserAsync(User).Result.Avatar.Trim()" />Edit Profile
             </a>
-            
+
         </li>
 
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                <button id="logout" type="submit" class="btn btn-outline-danger px-4">
-                    <svg style="margin-right: 2px; margin-top: 3px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M16 12.771h-3.091c-.542 0-.82-.188-1.055-.513l-1.244-1.674-2.029 2.199 1.008 1.562c.347.548.373.922.373 1.42v4.235h-1.962v-3.981c-.016-1.1-1.695-2.143-2.313-1.253l-1.176 1.659c-.261.372-.706.498-1.139.498h-3.372v-1.906l2.532-.001c.397 0 .741-.14.928-.586l1.126-2.75c.196-.41.46-.782.782-1.102l2.625-2.6-.741-.647c-.223-.195-.521-.277-.812-.227l-2.181.381-.342-1.599 2.992-.571c.561-.107 1.042.075 1.461.462l2.882 2.66c.456.414.924 1.136 1.654 2.215.135.199.323.477.766.477h2.328v1.642zm-2.982-5.042c1.02-.195 1.688-1.182 1.493-2.201-.172-.901-.96-1.528-1.845-1.528-1.186 0-2.07 1.078-1.85 2.234.196 1.021 1.181 1.69 2.202 1.495zm4.982-5.729v15l6 5v-20h-6z" /></svg>
-                <i>Logout</i>
-                </button>
-            </form>
+        <li class="nav-item" style=" margin-top: 2px;">
+            <a id="logoutForm" class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                Logout
+            </a>
         </li>
     }
     else
     {
-        <li class="nav-item">
-            <a class="btn btn-rounded px-4" id="register" asp-area="Identity" asp-page="/Account/Register">
-                <div class="row">
-                    <svg style="margin-right: 2px; margin-top: 3px;color:white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-                    </svg>
-                    <i>Register</i>
-                </div>  
+        <li class="nav-item  ">
+            <a class="nav-link text-success" id="register" asp-area="Identity" asp-page="/Account/Register">
+
+                Register
+
             </a>
         </li>
-        <li class="nav-item">
-            <a class="btn btn-outline-secondary px-4" id="login" asp-area="Identity" asp-page="/Account/Login">
-                <div class="row">
-                   
-                    <svg style="margin-right: 2px; margin-top: 3px;" xmlns="http://www.w3.org/2000/svg"
-                         width="15" height="15" viewBox="0 0 24 24">
-                    <path d="M10 9.408l2.963 2.592-2.963 2.592v-1.592h-8v-2h8v-1.592zm-2-4.408v4h-8v6h8v4l8-7-8-7zm6-3c-1.787 0-3.46.474-4.911 1.295l.228.2 1.396 1.221c1.004-.456 2.114-.716 3.287-.716 4.411 0 8 3.589 8 8s-3.589 8-8 8c-1.173 0-2.283-.26-3.288-.715l-1.396 1.221-.228.2c1.452.82 3.125 1.294 4.912 1.294 5.522 0 10-4.477 10-10s-4.478-10-10-10z" /></svg>
-                    <i>Login</i>
-                </div>   
+        <li class="nav-item ">
+            <a class="nav-link text-success" id="login" asp-area="Identity" asp-page="/Account/Login">
+                Login
             </a>
         </li>
     }

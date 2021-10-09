@@ -1,5 +1,7 @@
 ﻿<!-- jQuery -->
+
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+
 <!-- Bootstrap 4 -->
 <script src="~/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
@@ -20,14 +22,32 @@
 <script src="~/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <script src="~/AdminLTE/js/adminlte.min.js"></script>
-<script src="~/AdminLTE/js/demo.js"></script>
+
 
 <script>
     $(function () {
         $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "responsive": true, "lengthChange": false, "autoWidth": true,
             "buttons": ["copy", "csv", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
     });
 </script>
+
+<!--Report Scripts-->
+
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/common/ej2-base.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/common/ej2-data.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/common/ej2-pdf-export.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/common/ej2-svg-base.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/data-visualization/ej2-lineargauge.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/data-visualization/ej2-circulargauge.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/data-visualization/ej2-maps.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/common/bold.reports.common.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/common/bold.reports.widgets.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/data-visualization/ej.chart.min.js"></script>
+<script src="~/AdminLTE/bold-reports/Scripts/bold-reports/bold.report-viewer.min.js"></script>
+
+
+
+

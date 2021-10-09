@@ -74,8 +74,9 @@ namespace CLED.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            var removePasswordResult = await _userManager.RemovePasswordAsync(user);
             var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
-            if (!addPasswordResult.Succeeded)
+            if (!addPasswordResult.Succeeded && !removePasswordResult.Succeeded)
             {
                 foreach (var error in addPasswordResult.Errors)
                 {
@@ -83,11 +84,12 @@ namespace CLED.Areas.Identity.Pages.Account.Manage
                 }
                 return Page();
             }
-
+            else { 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your password has been set.";
 
             return RedirectToPage();
+            }
         }
     }
 }

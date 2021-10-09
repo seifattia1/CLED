@@ -21,15 +21,16 @@ namespace CLED.Data
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Facture> Factures { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            builder.Entity<CLEDUser>()
-        .HasIndex(u => u.Email)
-        .IsUnique();
+           // builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+           
         }
         public DbSet<CLED.Areas.Admin.ViewModels.AdministrationCreateRoleViewModel> AdministrationCreateRoleViewModel { get; set; }
+        public DbSet<CLED.Areas.Admin.ViewModels.FactureViewModel> FactureViewModel { get; set; }
     }
 }

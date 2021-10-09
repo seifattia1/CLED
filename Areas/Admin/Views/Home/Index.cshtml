@@ -1,5 +1,140 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using CLED.Areas.Identity.Data
+@using CLED.Data
+
+@inject SignInManager<CLEDUser> SignInManager
+@inject UserManager<CLEDUser> UserManager
+@inject CLEDContext context
+
+@{
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="row">
+    <div class="col mb-5">
+        <div class="form">
 
+            <div class="container">
+                <div class="container-fluid pt-5">
+                    <div class="container">
+                        <div class="text-center pb-2">
+                            <p class="section-title px-5"><span class="px-2">CLED</span></p>
+                            <h1 class="mb-4">Dashboard  | Statistics</h1>
+                        </div>
+                    </div>
+                </div>
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h3 class="card-title">Users Type Chart</h3>
+
+                                <div class="card-tools">
+                                    
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Users Countries Chart</h3>
+
+                                <div class="card-tools">
+                                    
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="AdminLte/plugins/chart.js/Chart.min.js"></script>
+<script src="AdminLte/dist/js/adminlte.min.js"></script>
+<script>
+    $(function () {
+        var areaChartData = {
+            labels: ["Country"],
+            datasets: [
+                {
+                    label: 'Tunisia',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: [@context.Users.AsEnumerable().Where(o=> o.coutry=="TN").Select(o => o.coutry).ToList().Count]
+                },
+                {
+                    label: 'Other countries ',
+                    backgroundColor: 'rgba(210, 214, 222, 1)',
+                    borderColor: 'rgba(210, 214, 222, 1)',
+                    pointRadius: false,
+                    pointColor: 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor: '#c1c7d1',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data: [@context.Users.AsEnumerable().Where(o=> o.coutry!="TN").Select(o => o.coutry).ToList().Count]
+                },
+                {
+                    backgroundColor: 'rgba(225, 225, 225, 0)',
+                    label:"",
+                    data: [0]
+                },
+            ]
+        }
+        var donutData = {
+            labels: [
+                'Premium Users',
+                'Free Users',
+
+            ],
+            datasets: [
+                {
+                    data: [@UserManager.GetUsersInRoleAsync("FreeUser").Result.Count,@UserManager.GetUsersInRoleAsync("PremiumUser").Result.Count],
+                    backgroundColor: ['#f56954', '#00a65a'],
+                }
+            ]
+        }
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData = donutData;
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        })
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartData)
+        var temp0 = areaChartData.datasets[0]
+        var temp1 = areaChartData.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
+
+        var barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false
+        }
+
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        })
+
+    })</script>

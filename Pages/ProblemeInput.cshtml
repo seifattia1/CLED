@@ -74,67 +74,6 @@
     </div>
 </div>
 
-
-
-
-@*     <div class="col-md">
-
-        <label>
-            @{
-                try
-                {
-                    string @urlpath = "";
-
-                    if (Model.list3 != null)
-                    {
-                        foreach (var @a in Model.list3)
-                        {
-                            string[] ad = a.ToArray();
-
-
-
-                            foreach (var item in a)
-                            {
-
-                                if (((item.Contains("http://")) || item.Contains("https://")))
-                                {
-                                    int i = Int32.Parse(ad[3]);
-                                    urlpath = @item.ToString();
-                                    if ((ad[1] != "PROPN"))
-                                    {
-
-                                        <span>  <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /></span>
-                                        <span> @i</span>
-
-                                    }
-
-                                }
-                            }
-                            if ((ad[1] == "PROPN"))
-                            {
-                                urlpath = ad[0].ToString();
-
-                                <span> <img src="@urlpath.ToString()" class="img-responsive" style="height: 100px; width: 100px;" /> ==> </span>
-                                }
-
-
-
-                            }
-
-
-                        }
-                    }
-
-                    catch (System.Exception ex)
-                    {
-
-                        <script>
-                            alert(@ex, "Please refresh the page");
-                        </script>
-                    }
-                }
-        </label>
-    </div>*@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

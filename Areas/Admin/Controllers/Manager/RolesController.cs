@@ -48,5 +48,20 @@ namespace CLED.Areas.Admin.Controllers.Manager
             
             return RedirectToAction(nameof(this.Index));
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("/admin/manage/role/")]
+        public async Task<IActionResult> Index(string Id)
+        {
+            var roleIsExists = await _roleManager.RoleExistsAsync(Id);
+            if (roleIsExists)
+            {
+                return View("Index", await _roleManager.Roles.ToListAsync());
+            }
+           
+            await _roleManager.DeleteAsync(_roleManager.FindByIdAsync(Id).Result);
+
+            return RedirectToAction(nameof(this.Index));
+        }
     }
 }

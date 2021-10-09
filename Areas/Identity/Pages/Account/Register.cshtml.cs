@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using CLED.Constants;
+using System.Data;
 
 namespace CLED.Areas.Identity.Pages.Account
 {
@@ -26,17 +27,20 @@ namespace CLED.Areas.Identity.Pages.Account
         private readonly UserManager<CLEDUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<CLEDUser> userManager,
             SignInManager<CLEDUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -52,6 +56,9 @@ namespace CLED.Areas.Identity.Pages.Account
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
             [Display(Name = "Full Name")]
             public string FullName { get; set; }
+
+            [Display(Name = "Country")]
+            public string Country { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
@@ -77,6 +84,8 @@ namespace CLED.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Avatar")]
             public string Avatar { get; set; }
+
+         
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -97,12 +106,16 @@ namespace CLED.Areas.Identity.Pages.Account
                     index = 0;
 
                 var avatarName = avatars[index];
-                var user = new CLEDUser { UserName = Input.UserName, Email = Input.Email, FullName = Input.FullName, Avatar = avatarName };
+                Input.Country = Request.Form["country-select"].ToString();
+                var user = new CLEDUser { UserName = Input.UserName, Email = Input.Email, FullName = Input.FullName, Avatar = avatarName,coutry = Input.Country };
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                   await _userManager.AddToRoleAsync(user,"FreeUser");
+                  
                     _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddToRoleAsync(user, Roles.FreeUser.ToString());
+                    var ww= await _userManager.AddToRoleAsync(user, Roles.FreeUser.ToString());
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
